@@ -1,19 +1,65 @@
-const tintColorLight = '#2f95dc';
-const tintColorDark = '#fff';
+// const tintColorLight = "#2f95dc";
+// const tintColorDark = "#fff";
+
+const whiteColor = "#fff";
+const lightColor = "#F8FAFC";
+const darkColor = "#0F172A";
+const accentColor = "#FF9F29";
 
 export default {
   light: {
-    text: '#000',
-    background: '#fff',
-    tint: tintColorLight,
-    tabIconDefault: '#ccc',
-    tabIconSelected: tintColorLight,
+    text: {
+      main: darkColor,
+      light: "#94A3B8",
+    },
+
+    button: {
+      textMain: whiteColor,
+      main: darkColor,
+    },
+
+    indicator: {
+      main: darkColor,
+      secondary: "#CBD5E1",
+    },
+    background: {
+      main: whiteColor,
+      secondary: whiteColor,
+    },
+    placeholder: "#CBD5E1",
+    accent: accentColor,
+
+    // tint: tintColorLight,
+    // tabIconDefault: "#ccc",
+    // tabIconSelected: tintColorLight,
   },
   dark: {
-    text: '#fff',
-    background: '#000',
-    tint: tintColorDark,
-    tabIconDefault: '#ccc',
-    tabIconSelected: tintColorDark,
+    text: {
+      main: lightColor,
+      light: "#64748B",
+    },
+
+    button: {
+      textMain: darkColor,
+      main: whiteColor,
+    },
+
+    indicator: {
+      main: whiteColor,
+      secondary: "#475569",
+    },
+
+    background: {
+      main: darkColor,
+      secondary: "#1B2537",
+    },
+
+    placeholder: "#64748B",
+
+    accent: accentColor,
+
+    // tint: tintColorDark,
+    // tabIconDefault: "#ccc",
+    // tabIconSelected: tintColorDark,
   },
 };
