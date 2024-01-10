@@ -49,9 +49,12 @@ const styles = ({ backgroundColor }: InputStylesType) =>
       paddingHorizontal: 20,
       flexDirection: "row",
       alignItems: "center",
+      gap: 13,
     },
 
     input: {
+      paddingHorizontal: 0,
       paddingVertical: 16,
+      flex: 1,
     },
   });

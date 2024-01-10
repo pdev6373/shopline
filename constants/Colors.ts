@@ -22,10 +22,13 @@ export default {
       main: darkColor,
       secondary: "#CBD5E1",
     },
+
     background: {
       main: whiteColor,
       secondary: whiteColor,
     },
+
+    border: "#E2E8F0",
     placeholder: "#CBD5E1",
     accent: accentColor,
 
@@ -33,6 +36,7 @@ export default {
     // tabIconDefault: "#ccc",
     // tabIconSelected: tintColorLight,
   },
+
   dark: {
     text: {
       main: lightColor,
@@ -54,8 +58,8 @@ export default {
       secondary: "#1B2537",
     },
 
+    border: "#2A3646",
     placeholder: "#64748B",
-
     accent: accentColor,
 
     // tint: tintColorDark,

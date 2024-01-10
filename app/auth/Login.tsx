@@ -1,15 +1,22 @@
 import { ScrollView, View } from "react-native";
-import { Image } from "expo-image";
 import {
   Input,
   MainButton,
   MainHeading,
   MainTextLight,
+  SocialButton,
   Text,
 } from "../../components/general";
+import { LinearGradient } from "expo-linear-gradient";
 import { useState } from "react";
 import { useTheme } from "../../hooks";
 import { Link } from "expo-router";
+import Email from "../../assets/images/svgs/mail.svg";
+import Lock from "../../assets/images/svgs/lock.svg";
+import EyeOff from "../../assets/images/svgs/eye-off.svg";
+import Logo from "../../assets/images/svgs/logo-dark.svg";
+import Google from "../../assets/images/svgs/google.svg";
+import Apple from "../../assets/images/svgs/apple.svg";
 
 export default function Login() {
   const { COLOR } = useTheme();
@@ -20,13 +27,20 @@ export default function Login() {
   const passwordHandler = (value: string) => setPassword(value);
 
   const signinHandler = async () => {};
+  const googleSigninHandler = async () => {};
+  const appleSigninHandler = async () => {};
 
   return (
-    <ScrollView contentContainerStyle={{ marginTop: 32 }}>
-      <Image
-        source={require("../../assets/images/svgs/logo-dark.svg")}
-        style={{ width: 44, height: 44 }}
-      />
+    <ScrollView
+      contentContainerStyle={{
+        marginTop: 32,
+        gap: 32,
+        flex: 1,
+        marginBottom: 16,
+      }}
+    >
+      <Logo width={44} height={44} />
+
       <View style={{ gap: 24 }}>
         <View>
           <MainHeading>Welcome back!</MainHeading>
@@ -39,23 +53,14 @@ export default function Login() {
           }}
         >
           <Input
-            iconLeft={
-              <Image
-                source={require("../../assets/images/svgs/mail.svg")}
-                style={{
-                  width: 20,
-                  height: 20,
-                }}
-              />
-            }
-            iconRight={<></>}
+            iconLeft={<Email width={20} height={20} />}
             value={email}
             placeholder="Email"
             onChangeText={(value: string) => emailHandler(value)}
           />
           <Input
-            iconLeft={<></>}
-            iconRight={<></>}
+            iconLeft={<Lock width={20} height={20} />}
+            iconRight={<EyeOff width={20} height={20} />}
             value={password}
             placeholder="Password"
             onChangeText={(value: string) => passwordHandler(value)}
@@ -80,6 +85,57 @@ export default function Login() {
         </View>
 
         <MainButton onPress={signinHandler}>Sign In</MainButton>
+      </View>
+
+      <View style={{ gap: 24 }}>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
+          <LinearGradient
+            colors={["#2A364600", "#2A3646"]}
+            style={{ height: 1.5, flex: 1 }}
+            start={{ x: 0, y: 0.5 }}
+            end={{ x: 1, y: 0.5 }}
+          />
+
+          <Text
+            size={14}
+            weight="400"
+            color={COLOR.text.main}
+            type="body"
+            letterSpacing={0.1}
+            center
+          >
+            Or sign in with
+          </Text>
+
+          <LinearGradient
+            colors={["#2A3646", "#2A364600"]}
+            style={{ height: 1.5, flex: 1 }}
+            start={{ x: 0, y: 0.5 }}
+            end={{ x: 1, y: 0.5 }}
+          />
+        </View>
+
+        <View style={{ flexDirection: "row", gap: 12 }}>
+          <SocialButton icon={<Google />} onPress={googleSigninHandler}>
+            Google
+          </SocialButton>
+          <SocialButton icon={<Apple />} onPress={appleSigninHandler}>
+            Apple
+          </SocialButton>
+        </View>
+      </View>
+
+      <View style={{ marginTop: "auto" }}>
+        <Text
+          size={14}
+          weight="400"
+          color={COLOR.text.main}
+          type="body"
+          letterSpacing={0.1}
+          center
+        >
+          Don’t have an account? Sign Up
+        </Text>
       </View>
     </ScrollView>
   );

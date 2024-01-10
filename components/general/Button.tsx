@@ -21,12 +21,14 @@ type ButtonType = {
   background: string;
   padding: number;
   radius: number;
+  borderColor?: string;
 };
 
 type ButtonStylesType = {
   backgroundColor: string;
   padding: number;
   borderRadius: number;
+  borderColor?: string;
 };
 
 export default function Button({
@@ -42,11 +44,13 @@ export default function Button({
   iconLeft,
   iconRight,
   href,
+  borderColor,
 }: ButtonType) {
   const Styles = styles({
     backgroundColor: background,
     borderRadius: radius,
-    padding,
+    padding: padding - 1,
+    borderColor,
   });
 
   const buttonText = (
@@ -67,7 +71,9 @@ export default function Button({
     </Link>
   ) : (
     <Pressable onPress={onPress} style={Styles.button}>
+      {iconLeft}
       {buttonText}
+      {iconRight}
     </Pressable>
   );
 }
@@ -93,7 +99,34 @@ export const MainButton = ({ children, href, onPress }: MainButtonType) => {
   );
 };
 
-const styles = ({ backgroundColor, padding, borderRadius }: ButtonStylesType) =>
+type SocialButtonType = { children: string; onPress: any; icon: JSX.Element };
+export const SocialButton = ({ children, onPress, icon }: SocialButtonType) => {
+  const { COLOR } = useTheme();
+
+  return (
+    <Button
+      textColor={COLOR.text.main}
+      textLetterSpacing={0.1}
+      textWeight="700"
+      textSize={14}
+      background={COLOR.background.main}
+      padding={16}
+      radius={1000}
+      borderColor={COLOR.border}
+      onPress={onPress}
+      iconLeft={icon}
+    >
+      {children}
+    </Button>
+  );
+};
+
+const styles = ({
+  backgroundColor,
+  padding,
+  borderRadius,
+  borderColor,
+}: ButtonStylesType) =>
   StyleSheet.create({
     button: {
       backgroundColor,
@@ -102,5 +135,9 @@ const styles = ({ backgroundColor, padding, borderRadius }: ButtonStylesType) =>
       flexDirection: "row",
       justifyContent: "center",
       alignItems: "center",
+      gap: 12,
+      borderColor: borderColor || backgroundColor,
+      borderWidth: 1,
+      flex: 1,
     },
   });
