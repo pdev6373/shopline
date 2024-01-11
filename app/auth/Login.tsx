@@ -26,9 +26,9 @@ export default function Login() {
   const emailHandler = (value: string) => setEmail(value);
   const passwordHandler = (value: string) => setPassword(value);
 
-  const signinHandler = async () => {};
   const googleSigninHandler = async () => {};
   const appleSigninHandler = async () => {};
+  const signinHandler = async () => {};
 
   return (
     <ScrollView
