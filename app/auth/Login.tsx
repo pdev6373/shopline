@@ -7,10 +7,10 @@ import {
   SocialButton,
   Text,
 } from "../../components/general";
+import { Link } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 import { useState } from "react";
 import { useTheme } from "../../hooks";
-import { Link } from "expo-router";
 import Email from "../../assets/images/svgs/mail.svg";
 import Lock from "../../assets/images/svgs/lock.svg";
 import EyeOff from "../../assets/images/svgs/eye-off.svg";
