@@ -7,8 +7,8 @@ import {
   SocialButton,
   Text,
 } from "../../components/general";
-import { Link } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
+import { Link } from "expo-router";
 import { useState } from "react";
 import { useTheme } from "../../hooks";
 import Email from "../../assets/images/svgs/mail.svg";
