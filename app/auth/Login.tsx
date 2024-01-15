@@ -1,4 +1,3 @@
-import { ScrollView, View } from "react-native";
 import {
   Input,
   MainButton,
@@ -7,6 +6,7 @@ import {
   SocialButton,
   Text,
 } from "../../components/general";
+import { ScrollView, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Link } from "expo-router";
 import { useState } from "react";
