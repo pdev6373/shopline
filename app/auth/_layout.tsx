@@ -1,18 +1,17 @@
-import { Stack, usePathname } from "expo-router";
-import Constants from "expo-constants";
+import { Stack } from "expo-router";
 import { useTheme } from "../../hooks";
+import Constants from "expo-constants";
 
 export default function AuthLayout() {
-  const pathname = usePathname();
   const { COLOR } = useTheme();
 
   return (
     <Stack
-      initialRouteName="/auth/Login"
+      initialRouteName="/auth/(Auth)?type=login"
       screenOptions={{
         headerShown: false,
         contentStyle: {
-          paddingHorizontal: pathname === "/auth/EnableFingerprint" ? 0 : 24,
+          paddingHorizontal: 24,
           backgroundColor: COLOR.background.main,
           paddingTop: Constants.statusBarHeight,
         },
