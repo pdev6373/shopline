@@ -1,13 +1,13 @@
-import { Dispatch, SetStateAction } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 import { useTheme } from "../../hooks";
+import { Dispatch, SetStateAction } from "react";
 
 type InputType = {
   iconLeft?: JSX.Element;
   iconRight?: JSX.Element;
   placeholder: string;
   value: string;
-  onChangeText: any;
+  setValue: Dispatch<SetStateAction<string>>;
 };
 
 type InputStylesType = {
@@ -19,19 +19,21 @@ export default function Input({
   iconRight,
   placeholder,
   value,
-  onChangeText,
+  setValue,
 }: InputType) {
   const { COLOR } = useTheme();
   const Styles = styles({
     backgroundColor: COLOR.background.secondary,
   });
 
+  const inputChangeHandler = (value: string) => setValue(value);
+
   return (
     <View style={Styles.wrapper}>
       {iconLeft}
       <TextInput
         value={value}
-        onChangeText={onChangeText}
+        onChangeText={inputChangeHandler}
         placeholder={placeholder}
         placeholderTextColor={COLOR.placeholder}
         style={Styles.input}
@@ -40,6 +42,17 @@ export default function Input({
     </View>
   );
 }
+
+type OTPInputType = {
+  value: string;
+  setValue: Dispatch<SetStateAction<string>>;
+};
+export const OTPInput = ({ value, setValue }: OTPInputType) => {
+  return (
+    <></>
+    // <Text>Input</Text>
+  );
+};
 
 const styles = ({ backgroundColor }: InputStylesType) =>
   StyleSheet.create({

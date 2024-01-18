@@ -62,14 +62,14 @@ export default function Auth() {
           iconRight: <></>,
           placeholder: AUTH_DATA.emailPlaceholder,
           value: email,
-          handler: (value: string) => setEmail(value),
+          handler: setEmail,
         },
         {
           iconLeft: AUTH_DATA.passowrdIcon,
           iconRight: AUTH_DATA.togglePasswordIcon,
           placeholder: AUTH_DATA.passwordPlaceholder,
           value: password,
-          handler: (value: string) => setPassword(value),
+          handler: setPassword,
         },
       ],
       buttonText: AUTH_DATA.signinButtonText,
@@ -85,21 +85,21 @@ export default function Auth() {
           iconRight: <></>,
           placeholder: AUTH_DATA.fullnamePlaceholder,
           value: fullname,
-          handler: (value: string) => setFullname(value),
+          handler: setFullname,
         },
         {
           iconLeft: AUTH_DATA.emailIcon,
           iconRight: <></>,
           placeholder: AUTH_DATA.emailPlaceholder,
           value: email,
-          handler: (value: string) => setEmail(value),
+          handler: setEmail,
         },
         {
           iconLeft: AUTH_DATA.passowrdIcon,
           iconRight: AUTH_DATA.togglePasswordIcon,
           placeholder: AUTH_DATA.passwordPlaceholder,
           value: password,
-          handler: (value: string) => setPassword(value),
+          handler: setPassword,
         },
       ],
       buttonText: AUTH_DATA.signupButtonText,
@@ -165,7 +165,7 @@ export default function Auth() {
               iconRight={input.iconRight}
               value={input.value}
               placeholder={input.placeholder}
-              onChangeText={(value: string) => input.handler(value)}
+              setValue={input.handler}
             />
           ))}
 

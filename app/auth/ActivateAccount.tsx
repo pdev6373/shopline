@@ -2,6 +2,7 @@ import {
   MainButton,
   MainHeading,
   MainTextLight,
+  OTPInput,
 } from "../../components/general";
 import { Cancel } from "../../assets/images/svgs";
 import { ScrollView, StyleSheet, View } from "react-native";
@@ -24,13 +25,7 @@ export default function ActivateAccount() {
         </View>
 
         <View style={styles.inputWrapper}>
-          {/* <Input
-            iconLeft={input.iconLeft}
-            iconRight={input.iconRight}
-            value={input.value}
-            placeholder={input.placeholder}
-            onChangeText={(value: string) => input.handler(value)}
-          /> */}
+          <OTPInput value={verificationCode} setValue={setVerificationCode} />
 
           {/* Send a new code */}
 

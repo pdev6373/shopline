@@ -4,4 +4,5 @@ export { default as Input } from "./Input";
 
 import { MainButton, SocialButton } from "./Button";
 import { MainHeading, MainTextLight } from "./Text";
-export { MainButton, SocialButton, MainHeading, MainTextLight };
+import { OTPInput } from "./Input";
+export { MainButton, SocialButton, MainHeading, MainTextLight, OTPInput };
