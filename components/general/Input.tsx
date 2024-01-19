@@ -1,17 +1,24 @@
 import { StyleSheet, TextInput, View } from "react-native";
 import { useTheme } from "../../hooks";
 import { Dispatch, SetStateAction } from "react";
+import Text from "./Text";
+import { ErrorType } from "../../types";
 
 type InputType = {
   iconLeft?: JSX.Element;
   iconRight?: JSX.Element;
   placeholder: string;
   value: string;
-  setValue: Dispatch<SetStateAction<string>>;
+  setValue: (text: string) => any;
+  errorMessage?: string;
+  setError?: Dispatch<SetStateAction<ErrorType>>;
 };
 
 type InputStylesType = {
   backgroundColor: string;
+  errorColor: string;
+  inputColor: string;
+  hasError?: boolean;
 };
 
 export default function Input({
@@ -20,25 +27,51 @@ export default function Input({
   placeholder,
   value,
   setValue,
+  errorMessage,
+  setError,
 }: InputType) {
   const { COLOR } = useTheme();
   const Styles = styles({
     backgroundColor: COLOR.background.secondary,
+    errorColor: COLOR.error,
+    inputColor: COLOR.text.main,
+    hasError: !!errorMessage,
   });
-
-  const inputChangeHandler = (value: string) => setValue(value);
 
   return (
     <View style={Styles.wrapper}>
-      {iconLeft}
-      <TextInput
-        value={value}
-        onChangeText={inputChangeHandler}
-        placeholder={placeholder}
-        placeholderTextColor={COLOR.placeholder}
-        style={Styles.input}
-      />
-      {iconRight}
+      <View style={Styles.inputWrapper}>
+        {iconLeft}
+        <TextInput
+          value={value}
+          onChangeText={(text) => {
+            setError &&
+              setError({
+                field: "",
+                message: "",
+              });
+            setValue(text);
+          }}
+          placeholder={placeholder}
+          placeholderTextColor={COLOR.placeholder}
+          style={Styles.input}
+        />
+        {iconRight}
+      </View>
+
+      {errorMessage ? (
+        <Text
+          color={COLOR.error}
+          size={12}
+          type="body"
+          weight="400"
+          letterSpacing={0.2}
+        >
+          {errorMessage}
+        </Text>
+      ) : (
+        <></>
+      )}
     </View>
   );
 }
@@ -54,20 +87,32 @@ export const OTPInput = ({ value, setValue }: OTPInputType) => {
   );
 };
 
-const styles = ({ backgroundColor }: InputStylesType) =>
+const styles = ({
+  backgroundColor,
+  hasError,
+  errorColor,
+  inputColor,
+}: InputStylesType) =>
   StyleSheet.create({
     wrapper: {
+      gap: 12,
+    },
+
+    inputWrapper: {
       backgroundColor,
       borderRadius: 1000,
       paddingHorizontal: 20,
       flexDirection: "row",
       alignItems: "center",
       gap: 13,
+      borderWidth: 1,
+      borderColor: hasError ? errorColor : backgroundColor,
     },
 
     input: {
       paddingHorizontal: 0,
-      paddingVertical: 16,
+      paddingVertical: 15,
       flex: 1,
+      color: inputColor,
     },
   });

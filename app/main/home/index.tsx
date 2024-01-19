@@ -1,9 +1,9 @@
 import { View, Text } from "react-native";
 
-export default function NewPassword() {
+export default function Home() {
   return (
     <View>
-      <Text>NewPassword</Text>
+      <Text>index</Text>
     </View>
   );
 }

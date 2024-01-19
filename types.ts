@@ -11,3 +11,8 @@ export type TextType = {
   letterSpacing?: TextLetterSpacingType;
   center?: boolean;
 };
+
+export type ErrorType = {
+  field: "email" | "fullname" | "password" | "";
+  message: string;
+};

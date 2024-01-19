@@ -7,13 +7,14 @@ export default function AuthLayout() {
 
   return (
     <Stack
-      initialRouteName="/auth/(Auth)?type=login"
+      initialRouteName="/auth"
       screenOptions={{
         headerShown: false,
         contentStyle: {
           paddingHorizontal: 24,
           backgroundColor: COLOR.background.main,
-          paddingTop: Constants.statusBarHeight,
+          paddingTop: Constants.statusBarHeight + 32,
+          paddingBottom: 16,
         },
       }}
     />

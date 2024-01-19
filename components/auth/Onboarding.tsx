@@ -2,7 +2,6 @@ import {
   Animated,
   FlatList,
   Image,
-  ScrollView,
   StyleSheet,
   View,
   useWindowDimensions,

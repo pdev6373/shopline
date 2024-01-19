@@ -3,19 +3,23 @@ import {
   MainHeading,
   MainTextLight,
   OTPInput,
+  Text,
 } from "../../components/general";
-import { Cancel } from "../../assets/images/svgs";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { useState } from "react";
+import { Header } from "../../components/auth";
+import { useTheme } from "../../hooks";
 
 export default function ActivateAccount() {
   const [verificationCode, setVerificationCode] = useState("");
+  const { COLOR } = useTheme();
 
+  const sendNewCodeHandler = async () => {};
   const activateAccountHandler = async () => {};
 
   return (
     <ScrollView contentContainerStyle={styles.wrapper}>
-      <Cancel width={24} height={24} />
+      <Header />
 
       <View style={styles.main}>
         <View>
@@ -27,7 +31,17 @@ export default function ActivateAccount() {
         <View style={styles.inputWrapper}>
           <OTPInput value={verificationCode} setValue={setVerificationCode} />
 
-          {/* Send a new code */}
+          <Pressable onPress={sendNewCodeHandler}>
+            <Text
+              size={16}
+              weight="700"
+              type="body"
+              letterSpacing={0.4}
+              color={COLOR.accent}
+            >
+              Send a new code
+            </Text>
+          </Pressable>
 
           <MainButton onPress={activateAccountHandler}>Confirm</MainButton>
         </View>

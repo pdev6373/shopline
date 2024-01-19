@@ -17,11 +17,12 @@ type ButtonType = {
   onPress?: any;
   iconLeft?: JSX.Element;
   iconRight?: JSX.Element;
-  href?: string;
+  href?: string | any;
   background: string;
   padding: number;
   radius: number;
   borderColor?: string;
+  disabled?: boolean;
 };
 
 type ButtonStylesType = {
@@ -45,6 +46,7 @@ export default function Button({
   iconRight,
   href,
   borderColor,
+  disabled = false,
 }: ButtonType) {
   const Styles = styles({
     backgroundColor: background,
@@ -66,11 +68,11 @@ export default function Button({
   );
 
   return href ? (
-    <Link href={href} style={Styles.button}>
-      {buttonText}
+    <Link href={href} asChild>
+      <Pressable style={Styles.button}>{buttonText}</Pressable>
     </Link>
   ) : (
-    <Pressable onPress={onPress} style={Styles.button}>
+    <Pressable disabled={disabled} onPress={onPress} style={Styles.button}>
       {iconLeft}
       {buttonText}
       {iconRight}
@@ -78,8 +80,18 @@ export default function Button({
   );
 }
 
-type MainButtonType = { children: string; href?: string; onPress?: any };
-export const MainButton = ({ children, href, onPress }: MainButtonType) => {
+type MainButtonType = {
+  children: string;
+  href?: string;
+  onPress?: any;
+  disabled?: boolean;
+};
+export const MainButton = ({
+  children,
+  href,
+  onPress,
+  disabled = false,
+}: MainButtonType) => {
   const { COLOR } = useTheme();
 
   return (
@@ -93,6 +105,7 @@ export const MainButton = ({ children, href, onPress }: MainButtonType) => {
       radius={1000}
       href={href}
       onPress={onPress}
+      disabled={disabled}
     >
       {children}
     </Button>

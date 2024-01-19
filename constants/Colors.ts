@@ -4,7 +4,8 @@
 const whiteColor = "#fff";
 const lightColor = "#F8FAFC";
 const darkColor = "#0F172A";
-const accentColor = "#FF9F29";
+const accent = "#FF9F29";
+const error = "#FD6A6A";
 
 export default {
   light: {
@@ -30,7 +31,9 @@ export default {
 
     border: "#E2E8F0",
     placeholder: "#CBD5E1",
-    accent: accentColor,
+    accent,
+    error,
+    white: whiteColor,
 
     // tint: tintColorLight,
     // tabIconDefault: "#ccc",
@@ -60,7 +63,9 @@ export default {
 
     border: "#2A3646",
     placeholder: "#64748B",
-    accent: accentColor,
+    accent,
+    error,
+    white: whiteColor,
 
     // tint: tintColorDark,
     // tabIconDefault: "#ccc",
