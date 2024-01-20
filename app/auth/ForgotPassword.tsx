@@ -8,9 +8,9 @@ import {
 } from "../../components/general";
 import {
   Check,
+  Uncheck,
   EmailWhite,
   PhoneWhite,
-  Uncheck,
 } from "../../assets/images/svgs";
 import { useTheme } from "../../hooks";
 import { useState } from "react";
