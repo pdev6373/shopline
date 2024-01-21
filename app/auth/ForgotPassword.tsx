@@ -9,8 +9,8 @@ import {
 import {
   Check,
   Uncheck,
-  EmailWhite,
   PhoneWhite,
+  EmailWhite,
 } from "../../assets/images/svgs";
 import { useTheme } from "../../hooks";
 import { useState } from "react";
