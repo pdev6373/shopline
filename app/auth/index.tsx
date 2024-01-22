@@ -18,7 +18,7 @@ import { Alert, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { useTheme } from "../../hooks";
+import { useEmailVeriication, useTheme } from "../../hooks";
 import { supabase } from "../../supabase";
 import { ErrorType } from "../../types";
 import { Header } from "../../components/auth";
@@ -51,7 +51,7 @@ const AUTH_DATA = {
         iconLeft: AUTH_CONSTANTS.passowrdIcon,
         iconRight: AUTH_CONSTANTS.togglePasswordIcon,
         placeholder: AUTH_CONSTANTS.passwordPlaceholder,
-        name: "passoword",
+        name: "password",
       },
     ],
     buttonText: AUTH_CONSTANTS.signIn,
@@ -80,7 +80,7 @@ const AUTH_DATA = {
         iconLeft: AUTH_CONSTANTS.passowrdIcon,
         iconRight: AUTH_CONSTANTS.togglePasswordIcon,
         placeholder: AUTH_CONSTANTS.passwordPlaceholder,
-        name: "passoword",
+        name: "password",
       },
     ],
     buttonText: AUTH_CONSTANTS.signUp,
@@ -108,6 +108,7 @@ export default function Auth() {
     field: "",
     message: "",
   });
+  const { createVerificationCode } = useEmailVeriication(email);
 
   useEffect(() => {
     setCurrentScreenData(AUTH_DATA[currentScreen]);
@@ -166,10 +167,7 @@ export default function Auth() {
 
     setLoading(true);
     try {
-      const {
-        data: { session },
-        error,
-      } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -180,8 +178,13 @@ export default function Auth() {
       });
 
       if (error) throw error;
-      if (!session)
-        Alert.alert("Please check your inbox for email verification!");
+      if (!data.session)
+        router.push({
+          pathname: "/auth/ActivateAccount",
+          params: {
+            email,
+          },
+        });
     } catch (error) {
       console.error(error);
     } finally {
@@ -250,7 +253,9 @@ export default function Auth() {
 
         <MainButton
           onPress={currentScreen === "signin" ? signinHandler : signupHandler}
-          disabled={!email || !password || !fullname}
+          disabled={
+            !email || !password || (currentScreen === "signup" && !fullname)
+          }
         >
           {currentScreenData.buttonText}
         </MainButton>

@@ -1,8 +1,9 @@
 import { StyleSheet, TextInput, View } from "react-native";
 import { useTheme } from "../../hooks";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useRef } from "react";
 import Text from "./Text";
 import { ErrorType } from "../../types";
+import OTPTextInput from "react-native-otp-textinput";
 
 type InputType = {
   iconLeft?: JSX.Element;
@@ -81,11 +82,46 @@ type OTPInputType = {
   setValue: Dispatch<SetStateAction<string>>;
 };
 export const OTPInput = ({ value, setValue }: OTPInputType) => {
+  let otpInput = useRef<any>();
+
+  // const setText = () => {
+  //   otpInput?.current?.setValue("1234");
+  // };
+
   return (
-    <></>
-    // <Text>Input</Text>
+    <OTPTextInput
+      inputCount={6}
+      autoFocus
+      offTintColor={"transparent"}
+      tintColor={"#FF9F29"}
+      textInputStyle={otpStyles.textInput}
+      containerStyle={otpStyles.container}
+    />
   );
 };
+
+const otpStyles = StyleSheet.create({
+  container: {
+    gap: 11.75,
+  },
+
+  textInput: {
+    borderRadius: 1000,
+    borderWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: "transparent",
+    backgroundColor: "#1B2537",
+    color: "#F8FAFC",
+    fontSize: 24,
+    lineHeight: 31,
+    textAlign: "center",
+    fontFamily: "PlusJakartaSans-Bold",
+    margin: 0,
+    padding: 14,
+    flex: 1,
+    aspectRatio: 1 / 1,
+  },
+});
 
 const styles = ({
   backgroundColor,

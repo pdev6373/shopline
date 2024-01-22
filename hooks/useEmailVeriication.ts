@@ -1,14 +1,17 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { nanoid } from "nanoid";
+import "react-native-get-random-values";
+import { customAlphabet } from "nanoid";
 
 export default function useEmailVeriication(userId: string) {
-  const storeVerificationCode = async () => {
-    const verificationCode = nanoid(6);
+  const createVerificationCode = async () => {
+    const verificationCode = customAlphabet("1234567890", 6)();
 
     await AsyncStorage.setItem(
       `verificationCode:${userId}`,
       verificationCode.toString()
     );
+
+    return verificationCode.toString();
   };
 
   const getVerificationCode = async () => {
@@ -31,7 +34,7 @@ export default function useEmailVeriication(userId: string) {
     await AsyncStorage.removeItem(`verificationCode:${userId}`);
 
   return {
-    storeVerificationCode,
+    createVerificationCode,
     getVerificationCode,
     isCorrectVerificationCode,
     clearVerificationCode,
