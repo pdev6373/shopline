@@ -7,7 +7,7 @@ export default function AuthLayout() {
 
   return (
     <Stack
-      initialRouteName="/auth"
+      initialRouteName="/auth/EnableFingerprint"
       screenOptions={{
         headerShown: false,
         contentStyle: {
@@ -17,6 +17,8 @@ export default function AuthLayout() {
           paddingBottom: 16,
         },
       }}
-    />
+    >
+      <Stack.Screen name="EnableFingerprint" />
+    </Stack>
   );
 }

@@ -1,9 +1,14 @@
-import { StyleSheet, TextInput, View } from "react-native";
+import { StyleSheet, TextInput, View, Text as RNText } from "react-native";
 import { useTheme } from "../../hooks";
 import { Dispatch, SetStateAction, useRef } from "react";
 import Text from "./Text";
 import { ErrorType } from "../../types";
-import OTPTextInput from "react-native-otp-textinput";
+import {
+  CodeField,
+  Cursor,
+  useBlurOnFulfill,
+  useClearByFocusCell,
+} from "react-native-confirmation-code-field";
 
 type InputType = {
   iconLeft?: JSX.Element;
@@ -82,44 +87,64 @@ type OTPInputType = {
   setValue: Dispatch<SetStateAction<string>>;
 };
 export const OTPInput = ({ value, setValue }: OTPInputType) => {
-  let otpInput = useRef<any>();
-
-  // const setText = () => {
-  //   otpInput?.current?.setValue("1234");
-  // };
+  const CELL_COUNT = 6;
+  const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
+  const [props, getCellOnLayoutHandler] = useClearByFocusCell({
+    value,
+    setValue,
+  });
 
   return (
-    <OTPTextInput
-      inputCount={6}
+    <CodeField
+      ref={ref}
+      {...props}
+      value={value}
       autoFocus
-      offTintColor={"transparent"}
-      tintColor={"#FF9F29"}
-      textInputStyle={otpStyles.textInput}
-      containerStyle={otpStyles.container}
+      onChangeText={(val) => setValue(val.replace(/[^0-9]/g, ""))}
+      cellCount={CELL_COUNT}
+      rootStyle={otpStyles.codeFieldRoot}
+      keyboardType="number-pad"
+      textContentType="oneTimeCode"
+      renderCell={({ index, symbol, isFocused }) => (
+        <RNText
+          key={index}
+          style={[otpStyles.cell, isFocused && otpStyles.focusCell]}
+          onLayout={getCellOnLayoutHandler(index)}
+        >
+          {symbol || (isFocused ? <Cursor /> : "")}
+        </RNText>
+      )}
     />
   );
 };
 
 const otpStyles = StyleSheet.create({
-  container: {
+  codeFieldRoot: {
     gap: 11.75,
+    justifyContent: "center",
+    alignItems: "center",
   },
 
-  textInput: {
-    borderRadius: 1000,
-    borderWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: "transparent",
-    backgroundColor: "#1B2537",
-    color: "#F8FAFC",
+  cell: {
     fontSize: 24,
     lineHeight: 31,
     textAlign: "center",
     fontFamily: "PlusJakartaSans-Bold",
+    borderRadius: 1000,
+    borderWidth: 1,
+    borderColor: "transparent",
+    backgroundColor: "#1B2537",
+    color: "#F8FAFC",
     margin: 0,
-    padding: 14,
     flex: 1,
     aspectRatio: 1 / 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 12,
+  },
+
+  focusCell: {
+    borderColor: "#FF9F29",
   },
 });
 

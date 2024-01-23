@@ -168,7 +168,7 @@ export default function Auth() {
     setLoading(true);
     try {
       const { data, error } = await supabase.auth.signUp({
-        email,
+        email: email.trim().toLowerCase(),
         password,
         options: {
           data: {
@@ -178,6 +178,7 @@ export default function Auth() {
       });
 
       if (error) throw error;
+      console.log(data);
       if (!data.session)
         router.push({
           pathname: "/auth/ActivateAccount",
@@ -195,7 +196,10 @@ export default function Auth() {
   const appleSigninHandler = async () => {};
 
   return (
-    <ScrollView contentContainerStyle={styles.wrapper}>
+    <ScrollView
+      contentContainerStyle={styles.wrapper}
+      keyboardShouldPersistTaps="handled"
+    >
       {currentScreenData.header}
 
       <View style={styles.main}>

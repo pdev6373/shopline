@@ -6,21 +6,27 @@ import {
   Text,
 } from "../../components/general";
 import { Pressable, ScrollView, StyleSheet, View } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Header } from "../../components/auth";
 import { useTheme } from "../../hooks";
 import { supabase } from "../../supabase";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 
 export default function ActivateAccount() {
   const [token, setToken] = useState("");
   const { COLOR } = useTheme();
   const { email } = useLocalSearchParams<{ email: string }>();
+  const router = useRouter();
 
   const splitEmail = email.split("@");
 
+  useEffect(() => {
+    if (token.length >= 6) activateAccountHandler();
+  }, [token]);
+
   const sendNewCodeHandler = async () => {};
   const activateAccountHandler = async () => {
+    console.log(token);
     try {
       const { data, error } = await supabase.auth.verifyOtp({
         email,
@@ -29,14 +35,20 @@ export default function ActivateAccount() {
       });
 
       if (error) throw error;
-      if (data) console.log(data);
+      if (data) {
+        console.log(data);
+        router.push("/auth/EnableFingerprint");
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.wrapper}>
+    <ScrollView
+      contentContainerStyle={styles.wrapper}
+      keyboardShouldPersistTaps="handled"
+    >
       <Header />
 
       <View style={styles.main}>
@@ -92,30 +104,6 @@ const styles = StyleSheet.create({
 
   headingWrapper: {
     gap: 8,
-  },
-
-  forgotPassword: {
-    marginLeft: "auto",
-  },
-
-  signinAlt: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 12,
-  },
-
-  altLine: {
-    height: 1.5,
-    flex: 1,
-  },
-
-  authButtons: {
-    flexDirection: "row",
-    gap: 12,
-  },
-
-  noAccount: {
-    marginTop: "auto",
   },
 
   bottom: {

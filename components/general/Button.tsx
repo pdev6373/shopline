@@ -85,22 +85,24 @@ type MainButtonType = {
   href?: string;
   onPress?: any;
   disabled?: boolean;
+  transparent?: boolean;
 };
 export const MainButton = ({
   children,
   href,
   onPress,
   disabled = false,
+  transparent = false,
 }: MainButtonType) => {
   const { COLOR } = useTheme();
 
   return (
     <Button
-      textColor={COLOR.button.textMain}
+      textColor={transparent ? COLOR.button.main : COLOR.button.textMain}
       textLetterSpacing={0.1}
       textWeight="700"
       textSize={14}
-      background={COLOR.button.main}
+      background={transparent ? "transparent" : COLOR.button.main}
       padding={16}
       radius={1000}
       href={href}
