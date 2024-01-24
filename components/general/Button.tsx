@@ -17,7 +17,6 @@ type ButtonType = {
   onPress?: any;
   iconLeft?: JSX.Element;
   iconRight?: JSX.Element;
-  href?: string | any;
   background: string;
   padding: number;
   radius: number;
@@ -44,7 +43,6 @@ export default function Button({
   padding,
   iconLeft,
   iconRight,
-  href,
   borderColor,
   disabled = false,
 }: ButtonType) {
@@ -67,11 +65,7 @@ export default function Button({
     </Text>
   );
 
-  return href ? (
-    <Link href={href} asChild>
-      <Pressable style={Styles.button}>{buttonText}</Pressable>
-    </Link>
-  ) : (
+  return (
     <Pressable disabled={disabled} onPress={onPress} style={Styles.button}>
       {iconLeft}
       {buttonText}
@@ -82,14 +76,12 @@ export default function Button({
 
 type MainButtonType = {
   children: string;
-  href?: string;
   onPress?: any;
   disabled?: boolean;
   transparent?: boolean;
 };
 export const MainButton = ({
   children,
-  href,
   onPress,
   disabled = false,
   transparent = false,
@@ -105,7 +97,6 @@ export const MainButton = ({
       background={transparent ? "transparent" : COLOR.button.main}
       padding={16}
       radius={1000}
-      href={href}
       onPress={onPress}
       disabled={disabled}
     >

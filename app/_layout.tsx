@@ -8,6 +8,8 @@ import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
 import { useColorScheme } from "react-native";
+import { useTheme } from "../hooks";
+import * as NavigationBar from "expo-navigation-bar";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -37,6 +39,14 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
+  const { COLOR } = useTheme();
+
+  useEffect(() => {
+    (async () => {
+      await NavigationBar.setBackgroundColorAsync(COLOR.background.main);
+      await NavigationBar.setBorderColorAsync(COLOR.background.main);
+    })();
+  }, []);
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>

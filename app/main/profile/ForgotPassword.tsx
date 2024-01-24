@@ -1,19 +1,20 @@
 import { StyleSheet, View, ScrollView, Pressable } from "react-native";
-import { Header } from "../../components/auth";
+import { Header } from "../../../components/auth";
 import {
   MainButton,
   MainHeading,
   MainTextLight,
   Text,
-} from "../../components/general";
+} from "../../../components/general";
 import {
   Check,
   Uncheck,
   PhoneWhite,
   EmailWhite,
-} from "../../assets/images/svgs";
-import { useTheme } from "../../hooks";
+} from "../../../assets/images/svgs";
+import { useTheme } from "../../../hooks";
 import { useState } from "react";
+import { useRouter } from "expo-router";
 
 const FORGOT_PASSWORD_DATA = [
   {
@@ -29,6 +30,10 @@ const FORGOT_PASSWORD_DATA = [
 export default function ForgotPassword() {
   const { COLOR } = useTheme();
   const [resetType, setResetType] = useState(FORGOT_PASSWORD_DATA[0].type);
+  const router = useRouter();
+
+  const confirmTypeHandler = () =>
+    router.push(`/auth/ResetType?type=${resetType}`);
 
   const resetTypeHandler = () =>
     setResetType((prev) =>
@@ -107,9 +112,7 @@ export default function ForgotPassword() {
       </View>
 
       <View>
-        <MainButton href={`/auth/ResetType?type=${resetType}`}>
-          Confirm
-        </MainButton>
+        <MainButton onPress={confirmTypeHandler}>Confirm</MainButton>
       </View>
     </ScrollView>
   );

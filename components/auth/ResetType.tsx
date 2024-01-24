@@ -1,40 +1,63 @@
-import { StyleSheet, View, ScrollView, Pressable } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import { Header } from "../../components/auth";
 import {
   Input,
   MainButton,
   MainHeading,
   MainTextLight,
-  Text,
 } from "../../components/general";
-import {
-  Check,
-  Email,
-  EmailWhite,
-  Phone,
-  Uncheck,
-} from "../../assets/images/svgs";
-import { useTheme } from "../../hooks";
+import { Email, Phone } from "../../assets/images/svgs";
 import { useState } from "react";
-import { useLocalSearchParams } from "expo-router";
+import { useRouter } from "expo-router";
+import { supabase } from "../../supabase";
 
-const FORGOT_PASSWORD_DATA = [
-  {
-    type: "Email",
-    icon: <EmailWhite width={20} height={20} />,
-  },
-  {
-    type: "Phone Number",
-    icon: <Phone width={20} height={20} />,
-  },
-];
+type ResetTypeType = {
+  type: "phone-number" | "email";
+};
 
-export default function ResetType() {
-  const { COLOR } = useTheme();
+export default function ResetType({ type }: ResetTypeType) {
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const params = useLocalSearchParams<any>();
-  console.log("params", params);
+  const router = useRouter();
+  const [error, setError] = useState({
+    field: "",
+    message: "",
+  });
+  const [loading, setLoading] = useState(false);
+
+  const resetPasswordByPhoneNumberHandler = async () => {};
+
+  const resetPasswordByEmailHandler = async () => {
+    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+      setError({
+        field: "email",
+        message: "Invalid email address",
+      });
+
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.auth.resetPasswordForEmail(email);
+
+      console.log("data", data);
+      console.log("error", error);
+
+      if (error) throw error;
+      if (data)
+        router.push({
+          pathname: "/auth/VerifyAccount",
+          params: {
+            email,
+          },
+        });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.wrapper}>
@@ -50,7 +73,7 @@ export default function ResetType() {
             </MainTextLight>
           </View>
 
-          {params?.type?.toLowerCase() === "email" ? (
+          {type === "email" ? (
             <Input
               placeholder="Email"
               value={email}
@@ -69,7 +92,17 @@ export default function ResetType() {
       </View>
 
       <View>
-        <MainButton href="/auth/ActivateAccount?type=reset-password">
+        <MainButton
+          onPress={
+            type === "email"
+              ? resetPasswordByEmailHandler
+              : resetPasswordByPhoneNumberHandler
+          }
+          disabled={
+            (type === "email" && !email) ||
+            (type === "phone-number" && !phoneNumber)
+          }
+        >
           Send Code
         </MainButton>
       </View>

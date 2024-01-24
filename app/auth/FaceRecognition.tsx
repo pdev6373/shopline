@@ -7,12 +7,17 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { Header } from "../../components/auth";
 import { useRouter } from "expo-router";
 import { FaceVerification } from "../../assets/images/svgs";
+import { useBiometrics } from "../../hooks";
 
 export default function FaceRecognition() {
   const router = useRouter();
+  const { unlockAppHandler } = useBiometrics();
 
-  const sendNewCodeHandler = async () => {};
-  const faceVerificationHandler = async () => router.push("/main/home/");
+  const faceVerificationHandler = async () => {
+    const response = await unlockAppHandler();
+    if (response) router.push("/main/_layout");
+    else console.log("error");
+  };
 
   return (
     <ScrollView

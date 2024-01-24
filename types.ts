@@ -12,7 +12,7 @@ export type TextType = {
   center?: boolean;
 };
 
-export type ErrorType = {
-  field: "email" | "fullname" | "password" | "";
+export type ErrorType<T> = {
+  field: T | "";
   message: string;
 };

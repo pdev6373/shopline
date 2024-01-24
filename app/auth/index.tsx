@@ -14,11 +14,11 @@ import {
   Google,
   User,
 } from "../../assets/images/svgs";
-import { Alert, Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { useEmailVeriication, useTheme } from "../../hooks";
+import { useTheme } from "../../hooks";
 import { supabase } from "../../supabase";
 import { ErrorType } from "../../types";
 import { Header } from "../../components/auth";
@@ -104,11 +104,12 @@ export default function Auth() {
   const [currentScreenData, setCurrentScreenData] = useState(
     AUTH_DATA[currentScreen]
   );
-  const [error, setError] = useState<ErrorType>({
+  const [error, setError] = useState<
+    ErrorType<"email" | "password" | "fullname">
+  >({
     field: "",
     message: "",
   });
-  const { createVerificationCode } = useEmailVeriication(email);
 
   useEffect(() => {
     setCurrentScreenData(AUTH_DATA[currentScreen]);
@@ -133,7 +134,7 @@ export default function Auth() {
 
     setLoading(true);
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
@@ -178,7 +179,6 @@ export default function Auth() {
       });
 
       if (error) throw error;
-      console.log(data);
       if (!data.session)
         router.push({
           pathname: "/auth/ActivateAccount",
@@ -239,7 +239,7 @@ export default function Auth() {
           ))}
 
           {currentScreenData?.forgotPassword ? (
-            <Link href="/auth/ForgotPassword" style={styles.forgotPassword}>
+            <Link href="/auth/ResetPassword" style={styles.forgotPassword}>
               <Text
                 color={COLOR.accent}
                 size={14}

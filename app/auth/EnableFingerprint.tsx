@@ -7,13 +7,19 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { Header } from "../../components/auth";
 import { useRouter } from "expo-router";
 import { Fingerprint } from "../../assets/images/svgs";
+import { useEffect } from "react";
+import { useBiometrics } from "../../hooks";
 
 export default function EnableFingerprint() {
   const router = useRouter();
+  const { unlockAppHandler } = useBiometrics();
 
-  const sendNewCodeHandler = async () => {};
-  const skipFingerprintHandler = async () =>
-    router.push("/auth/FaceRecognition");
+  const enaleFingerprintHandler = async () => {
+    const response = await unlockAppHandler();
+    if (response) router.push("/main/_layout");
+    else console.log("error");
+  };
+  const skipFingerprintHandler = async () => router.push("/main/_layout");
 
   return (
     <ScrollView
@@ -38,7 +44,7 @@ export default function EnableFingerprint() {
 
         <View style={styles.bottom}>
           <View>
-            <MainButton onPress={skipFingerprintHandler}>
+            <MainButton onPress={enaleFingerprintHandler}>
               Enable Fingerprint
             </MainButton>
             <MainButton onPress={skipFingerprintHandler} transparent>
