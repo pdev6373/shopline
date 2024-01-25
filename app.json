@@ -12,11 +12,11 @@
       "supportsTablet": true,
       "splash": {
         "image": "./assets/images/splash-screen-light.png",
-        "resizeMode": "contain",
+        "resizeMode": "cover",
         "backgroundColor": "#ffffff",
         "dark": {
           "image": "./assets/images/splash-screen-dark.png",
-          "resizeMode": "contain",
+          "resizeMode": "cover",
           "backgroundColor": "#0F172A"
         }
       },
@@ -31,11 +31,11 @@
       },
       "splash": {
         "image": "./assets/images/splash-screen-light.png",
-        "resizeMode": "contain",
+        "resizeMode": "cover",
         "backgroundColor": "#ffffff",
         "dark": {
           "image": "./assets/images/splash-screen-dark.png",
-          "resizeMode": "contain",
+          "resizeMode": "cover",
           "backgroundColor": "#0F172A"
         }
       },
