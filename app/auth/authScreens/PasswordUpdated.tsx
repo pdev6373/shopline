@@ -3,22 +3,20 @@ import {
   MainHeading,
   MainTextLight,
   Text,
-} from "../../components/general";
-import { ScrollView, StyleSheet, View } from "react-native";
-import { Header } from "../../components/auth";
+} from "../../../components/general";
+import { StyleSheet, View } from "react-native";
+import { Header } from "../../../components/auth";
 import { useRouter } from "expo-router";
-import { PasswordUpdateSuccess } from "../../assets/images/svgs";
+import { PasswordUpdateSuccess } from "../../../assets/images/svgs";
 
 export default function PasswordUpdated() {
   const router = useRouter();
 
-  const backToSigninHandler = () => router.push("/auth?type=signin");
+  const backToSigninHandler = () =>
+    router.push("/auth/authScreens?type=signin");
 
   return (
-    <ScrollView
-      contentContainerStyle={styles.wrapper}
-      keyboardShouldPersistTaps="handled"
-    >
+    <>
       <Header type="cancel" />
 
       <View style={styles.mainInner}>
@@ -72,16 +70,11 @@ export default function PasswordUpdated() {
           </View>
         </View>
       </View>
-    </ScrollView>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  wrapper: {
-    gap: 32,
-    flexGrow: 1,
-  },
-
   headingWrapper: {
     gap: 8,
   },

@@ -9,6 +9,7 @@
     "userInterfaceStyle": "automatic",
     "assetBundlePatterns": ["**/*"],
     "ios": {
+      "bundleIdentifier": "com.shopline.app",
       "supportsTablet": true,
       "splash": {
         "image": "./assets/images/splash-screen-light.png",
@@ -21,7 +22,12 @@
         }
       },
       "infoPlist": {
-        "NSFaceIDUsageDescription": "Allow Shopline to use Face ID to secure your account."
+        "NSFaceIDUsageDescription": "Allow Shopline to use Face ID to secure your account.",
+        "CFBundleURLTypes": {
+          "CFBundleURLSchemes": [
+            "com.googleusercontent.apps.927269086968-ksr6sl30pegsukalouqa8oo3cngbhukj"
+          ]
+        }
       }
     },
     "android": {
@@ -52,6 +58,7 @@
     },
     "plugins": [
       "expo-router",
+      "@react-native-google-signin/google-signin",
       [
         "expo-local-authentication",
         {

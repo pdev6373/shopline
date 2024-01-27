@@ -6,10 +6,12 @@ import {
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useColorScheme } from "react-native";
 import { useTheme } from "../hooks";
 import * as NavigationBar from "expo-navigation-bar";
+import { ToastRef } from "../types";
+import { Toast } from "../components/general";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -40,6 +42,7 @@ export default function RootLayout() {
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
   const { COLOR } = useTheme();
+  const toastRef = useRef<ToastRef>(null);
 
   useEffect(() => {
     (async () => {
@@ -48,9 +51,44 @@ function RootLayoutNav() {
     })();
   }, []);
 
+  const showInfo = () => {
+    toastRef.current?.hide(() => {
+      toastRef.current?.show({
+        duration: 400,
+        text: "Hello",
+        type: "info",
+      });
+    });
+  };
+
+  const showSuccess = () => {
+    toastRef.current?.hide(() => {
+      toastRef.current?.show({
+        duration: 400,
+        text: "Done",
+        type: "success",
+      });
+    });
+  };
+
+  const showError = () => {
+    toastRef.current?.hide(() => {
+      toastRef.current?.show({
+        duration: 400,
+        text: "Failed",
+        type: "error",
+      });
+    });
+  };
+
+  const hide = () => toastRef.current?.hide();
+
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack screenOptions={{ headerShown: false }} />
+      <>
+        <Toast ref={toastRef} />
+        <Stack screenOptions={{ headerShown: false }} />
+      </>
     </ThemeProvider>
   );
 }

@@ -2,12 +2,12 @@ import {
   MainButton,
   MainHeading,
   MainTextLight,
-} from "../../components/general";
-import { ScrollView, StyleSheet, View } from "react-native";
-import { Header } from "../../components/auth";
+} from "../../../components/general";
+import { StyleSheet, View } from "react-native";
+import { Header } from "../../../components/auth";
 import { useRouter } from "expo-router";
-import { FaceVerification } from "../../assets/images/svgs";
-import { useBiometrics } from "../../hooks";
+import { FaceVerification } from "../../../assets/images/svgs";
+import { useBiometrics } from "../../../hooks";
 
 export default function FaceRecognition() {
   const router = useRouter();
@@ -20,10 +20,7 @@ export default function FaceRecognition() {
   };
 
   return (
-    <ScrollView
-      contentContainerStyle={styles.wrapper}
-      keyboardShouldPersistTaps="handled"
-    >
+    <>
       <Header type="arrow" />
 
       <View style={styles.mainInner}>
@@ -48,16 +45,11 @@ export default function FaceRecognition() {
           </View>
         </View>
       </View>
-    </ScrollView>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  wrapper: {
-    gap: 32,
-    flexGrow: 1,
-  },
-
   headingWrapper: {
     gap: 8,
   },

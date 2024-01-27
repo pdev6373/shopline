@@ -1,6 +1,7 @@
 import { Text as ReactNativeText, StyleSheet } from "react-native";
 import { TextLetterSpacingType, TextSizeType, TextType } from "../../types";
 import { useTheme } from "../../hooks";
+import Animated from "react-native-reanimated";
 
 type LineHeightType =
   | 16
@@ -38,6 +39,9 @@ export default function Text({
   letterSpacing,
   type,
   center = false,
+  onLayout,
+  isAnimated = false,
+  style,
 }: TextType) {
   const fontFamily = (): FontFamilyType => {
     switch (weight) {
@@ -86,7 +90,21 @@ export default function Text({
     center,
   });
 
-  return <ReactNativeText style={Styles.text}>{children}</ReactNativeText>;
+  return isAnimated ? (
+    <Animated.Text
+      onLayout={onLayout || undefined}
+      style={[Styles.text, style]}
+    >
+      {children}
+    </Animated.Text>
+  ) : (
+    <ReactNativeText
+      onLayout={onLayout || undefined}
+      style={[Styles.text, style]}
+    >
+      {children}
+    </ReactNativeText>
+  );
 }
 
 type MainHeadingType = { children: string; center?: boolean };

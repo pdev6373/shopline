@@ -5,7 +5,7 @@ import {
   MainTextLight,
   SocialButton,
   Text,
-} from "../../components/general";
+} from "../../../components/general";
 import {
   Apple,
   Email,
@@ -13,15 +13,16 @@ import {
   EyeOff,
   Google,
   User,
-} from "../../assets/images/svgs";
-import { Pressable, ScrollView, StyleSheet, View } from "react-native";
+} from "../../../assets/images/svgs";
+import { Pressable, StyleSheet, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { useTheme } from "../../hooks";
-import { supabase } from "../../supabase";
-import { ErrorType } from "../../types";
-import { Header } from "../../components/auth";
+import { useTheme } from "../../../hooks";
+import { supabase } from "../../../supabase";
+import { ErrorType } from "../../../types";
+import { Header } from "../../../components/auth";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 
 const GRADIENT_START = { x: 0, y: 0.5 };
 const GRADIENT_END = { x: 1, y: 0.5 };
@@ -99,7 +100,7 @@ export default function Auth() {
   const [fullname, setFullname] = useState("");
   const [loading, setLoading] = useState(false);
   const [currentScreen, setCurrentScreen] = useState<"signup" | "signin">(
-    "signin"
+    params.type === "signup" ? "signup" : "signin"
   );
   const [currentScreenData, setCurrentScreenData] = useState(
     AUTH_DATA[currentScreen]
@@ -110,6 +111,15 @@ export default function Auth() {
     field: "",
     message: "",
   });
+  const [signinError, setSigninError] = useState("");
+
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId: process.env.EXPO_PUBLIC_WEB_CLIENT_ID,
+      // androidClientId: process.env.EXPO_PUBLIC_ANDROID_CLIENT_ID,
+      iosClientId: process.env.EXPO_PUBLIC_IOS_CLIENT_ID,
+    });
+  }, []);
 
   useEffect(() => {
     setCurrentScreenData(AUTH_DATA[currentScreen]);
@@ -181,7 +191,7 @@ export default function Auth() {
       if (error) throw error;
       if (!data.session)
         router.push({
-          pathname: "/auth/ActivateAccount",
+          pathname: "/auth/authScreens/ActivateAccount",
           params: {
             email,
           },
@@ -192,14 +202,25 @@ export default function Auth() {
       setLoading(false);
     }
   };
-  const googleSigninHandler = async () => {};
+
+  const googleSigninHandler = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+    } catch (error: any) {
+      setError(error);
+    }
+  };
+
   const appleSigninHandler = async () => {};
 
+  const logout = () => {
+    GoogleSignin.revokeAccess();
+    GoogleSignin.signOut();
+  };
+
   return (
-    <ScrollView
-      contentContainerStyle={styles.wrapper}
-      keyboardShouldPersistTaps="handled"
-    >
+    <>
       {currentScreenData.header}
 
       <View style={styles.main}>
@@ -304,7 +325,7 @@ export default function Auth() {
       </View>
 
       <Link
-        href={`/auth?type=${navigationType()}`}
+        href={`/auth/authScreens?type=${navigationType()}`}
         asChild
         style={styles.noAccount}
       >
@@ -329,16 +350,11 @@ export default function Auth() {
           </Text>
         </Pressable>
       </Link>
-    </ScrollView>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  wrapper: {
-    gap: 32,
-    flexGrow: 1,
-  },
-
   main: {
     gap: 24,
   },

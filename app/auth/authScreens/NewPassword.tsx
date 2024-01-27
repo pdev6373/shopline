@@ -3,14 +3,14 @@ import {
   MainButton,
   MainHeading,
   MainTextLight,
-} from "../../components/general";
-import { Lock, EyeOff } from "../../assets/images/svgs";
-import { ScrollView, StyleSheet, View } from "react-native";
+} from "../../../components/general";
+import { Lock, EyeOff } from "../../../assets/images/svgs";
+import { StyleSheet, View } from "react-native";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { supabase } from "../../supabase";
-import { ErrorType } from "../../types";
-import { Header } from "../../components/auth";
+import { supabase } from "../../../supabase";
+import { ErrorType } from "../../../types";
+import { Header } from "../../../components/auth";
 
 export default function NewPassword() {
   const router = useRouter();
@@ -50,10 +50,7 @@ export default function NewPassword() {
   };
 
   return (
-    <ScrollView
-      contentContainerStyle={styles.wrapper}
-      keyboardShouldPersistTaps="handled"
-    >
+    <>
       <Header type="arrow" />
 
       <View style={styles.headingWrapper}>
@@ -99,16 +96,11 @@ export default function NewPassword() {
           Continue
         </MainButton>
       </View>
-    </ScrollView>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  wrapper: {
-    gap: 32,
-    flexGrow: 1,
-  },
-
   main: {
     gap: 24,
   },

@@ -55,8 +55,8 @@ export default function ConfirmAction({
           if (!isDeviceEnrolled) router.push("/main/_layout");
           else
             Platform.OS === "android"
-              ? router.push("/auth/EnableFingerprint")
-              : router.push("/auth/FaceRecognition");
+              ? router.push("/auth/authScreens/EnableFingerprint")
+              : router.push("/auth/authScreens/FaceRecognition");
         }
       } else {
         const { data, error } = await supabase.auth.verifyOtp({
@@ -66,7 +66,7 @@ export default function ConfirmAction({
         });
 
         if (error) throw error;
-        if (data) router.push("/auth/NewPassword");
+        if (data) router.push("/auth/authScreens/NewPassword");
       }
     } catch (error) {
       console.log(error);
@@ -74,10 +74,7 @@ export default function ConfirmAction({
   };
 
   return (
-    <ScrollView
-      contentContainerStyle={styles.wrapper}
-      keyboardShouldPersistTaps="handled"
-    >
+    <>
       <Header />
 
       <View style={styles.main}>
@@ -117,16 +114,11 @@ export default function ConfirmAction({
           <MainButton onPress={confirmActionHandler}>Confirm</MainButton>
         </View>
       </View>
-    </ScrollView>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  wrapper: {
-    gap: 32,
-    flexGrow: 1,
-  },
-
   main: {
     gap: 24,
   },

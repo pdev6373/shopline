@@ -1,4 +1,4 @@
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Header } from "../../components/auth";
 import {
   Input,
@@ -47,7 +47,7 @@ export default function ResetType({ type }: ResetTypeType) {
       if (error) throw error;
       if (data)
         router.push({
-          pathname: "/auth/VerifyAccount",
+          pathname: "/auth/authScreens/VerifyAccount",
           params: {
             email,
           },
@@ -60,7 +60,7 @@ export default function ResetType({ type }: ResetTypeType) {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.wrapper}>
+    <View style={styles.wrapper}>
       <View style={styles.mainWrapper}>
         <Header type="arrow" />
 
@@ -106,7 +106,7 @@ export default function ResetType({ type }: ResetTypeType) {
           Send Code
         </MainButton>
       </View>
-    </ScrollView>
+    </View>
   );
 }
 

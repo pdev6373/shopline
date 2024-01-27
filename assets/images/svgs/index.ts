@@ -15,3 +15,6 @@ export { default as PasswordUpdateSuccess } from "./password-update-success.svg"
 export { default as Phone } from "./phone.svg";
 export { default as PhoneWhite } from "./phone-white.svg";
 export { default as Uncheck } from "./uncheck.svg";
+export { default as Success } from "./success.svg";
+export { default as Error } from "./error.svg";
+export { default as Info } from "./info.svg";

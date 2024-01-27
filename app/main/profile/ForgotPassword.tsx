@@ -33,7 +33,7 @@ export default function ForgotPassword() {
   const router = useRouter();
 
   const confirmTypeHandler = () =>
-    router.push(`/auth/ResetType?type=${resetType}`);
+    router.push(`/auth/authScreens/ResetType?type=${resetType}`);
 
   const resetTypeHandler = () =>
     setResetType((prev) =>

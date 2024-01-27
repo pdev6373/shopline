@@ -1,4 +1,4 @@
-import { ConfirmAction } from "../../components/auth";
+import { ConfirmAction } from "../../../components/auth";
 import { useLocalSearchParams } from "expo-router";
 
 export default function ActivateAccount() {

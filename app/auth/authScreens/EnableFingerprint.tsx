@@ -2,13 +2,12 @@ import {
   MainButton,
   MainHeading,
   MainTextLight,
-} from "../../components/general";
-import { ScrollView, StyleSheet, View } from "react-native";
-import { Header } from "../../components/auth";
+} from "../../../components/general";
+import { StyleSheet, View } from "react-native";
+import { Header } from "../../../components/auth";
 import { useRouter } from "expo-router";
-import { Fingerprint } from "../../assets/images/svgs";
-import { useEffect } from "react";
-import { useBiometrics } from "../../hooks";
+import { Fingerprint } from "../../../assets/images/svgs";
+import { useBiometrics } from "../../../hooks";
 
 export default function EnableFingerprint() {
   const router = useRouter();
@@ -22,10 +21,7 @@ export default function EnableFingerprint() {
   const skipFingerprintHandler = async () => router.push("/main/_layout");
 
   return (
-    <ScrollView
-      contentContainerStyle={styles.wrapper}
-      keyboardShouldPersistTaps="handled"
-    >
+    <>
       <Header type="arrow" />
 
       <View style={styles.mainInner}>
@@ -53,16 +49,11 @@ export default function EnableFingerprint() {
           </View>
         </View>
       </View>
-    </ScrollView>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  wrapper: {
-    gap: 32,
-    flexGrow: 1,
-  },
-
   headingWrapper: {
     gap: 8,
   },
