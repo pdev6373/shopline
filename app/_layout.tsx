@@ -62,9 +62,10 @@ function RootLayoutNav() {
   };
 
   const showSuccess = () => {
+    console.log("Hello");
     toastRef.current?.hide(() => {
       toastRef.current?.show({
-        duration: 400,
+        duration: 2000,
         text: "Done",
         type: "success",
       });
@@ -82,6 +83,10 @@ function RootLayoutNav() {
   };
 
   const hide = () => toastRef.current?.hide();
+
+  useEffect(() => {
+    showSuccess();
+  }, []);
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>

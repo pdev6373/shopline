@@ -1,5 +1,5 @@
 import { Ref, useEffect, useImperativeHandle, useRef, useState } from "react";
-import { StyleSheet, LayoutChangeEvent } from "react-native";
+import { StyleSheet, LayoutChangeEvent, View, Dimensions } from "react-native";
 import { Error, Info, Success } from "../../assets/images/svgs";
 import Constants from "expo-constants";
 import Animated, {
@@ -30,17 +30,26 @@ export default function Toast({ ref, onHide }: ToastType) {
   const visibleState = useRef(false);
   const timer = useRef<NodeJS.Timeout>();
   const [textLength, setTextLength] = useState(0);
-  const [toastHeight, setToastHeight] = useState(0);
-  const transY = useSharedValue(0);
-  const transX = useSharedValue(0);
+  // const [toastHeight, setToastHeight] = useState(0);
+  const transY = useSharedValue(-40);
+  const width = useSharedValue(32);
+
+  // useEffect(() => {
+  //   if (config?.text && toastHeight && textLength) {
+  //     transX.value = textLength + 12;
+  //     showToast();
+  //     timer.current = setTimeout(hide, 4000);
+  //   }
+
+  //   return () => {
+  //     if (timer.current) clearTimeout(timer.current);
+  //   };
+  // }, [config, toastHeight, textLength]);
 
   useEffect(() => {
-    if (toastHeight) transY.value = -toastHeight;
-  }, [toastHeight]);
-
-  useEffect(() => {
-    if (config?.text && toastHeight && textLength) {
-      transX.value = textLength + 12;
+    if (config?.text) {
+      // width.value = textLength + 12;
+      // width.value = 36;
       showToast();
       timer.current = setTimeout(hide, 4000);
     }
@@ -48,7 +57,16 @@ export default function Toast({ ref, onHide }: ToastType) {
     return () => {
       if (timer.current) clearTimeout(timer.current);
     };
-  }, [config, toastHeight, textLength]);
+  }, [config]);
+
+  useEffect(() => {
+    console.log("Thedre");
+    show({
+      duration: 500,
+      text: "Hello",
+      type: "success",
+    });
+  }, []);
 
   const show = ({ duration, text, type }: ConfigProps) => {
     setConfig({
@@ -61,12 +79,17 @@ export default function Toast({ ref, onHide }: ToastType) {
   const showToast = () => {
     if (!visibleState.current) {
       visibleState.current = true;
-      transY.value = withTiming(80, {
+      transY.value = withTiming(Constants.statusBarHeight + 12, {
         duration: config?.duration,
       });
-      transX.value = withDelay(
+      width.value = withDelay(
         config?.duration,
-        withTiming(0, { duration: config?.duration })
+        withTiming(
+          textLength + 18 + 24 > Dimensions.get("screen").width
+            ? Dimensions.get("screen").width
+            : textLength + 18 + 24,
+          { duration: config?.duration }
+        )
       );
     }
   };
@@ -74,20 +97,20 @@ export default function Toast({ ref, onHide }: ToastType) {
   const hide = (callback?: HideProps) => {
     if (timer.current) clearTimeout(timer.current);
 
-    transX.value = withTiming(textLength + 12, {
-      duration: config?.duration,
-    });
-    transY.value = withDelay(
-      config.duration,
-      withTiming(
-        -toastHeight,
-        {
-          duration: config?.duration,
-          easing: Easing.bezierFn(0.36, 0, 0.66, -0.56),
-        },
-        () => runOnJS(onFinishHandler)(callback)
-      )
-    );
+    // transX.value = withTiming(textLength + 12, {
+    //   duration: config?.duration,
+    // });
+    // transY.value = withDelay(
+    //   config.duration,
+    //   withTiming(
+    //     -toastHeight,
+    //     {
+    //       duration: config?.duration,
+    //       easing: Easing.bezierFn(0.36, 0, 0.66, -0.56),
+    //     },
+    //     () => runOnJS(onFinishHandler)(callback)
+    //   )
+    // );
   };
 
   const onFinishHandler = (callback?: HideProps) => {
@@ -103,11 +126,11 @@ export default function Toast({ ref, onHide }: ToastType) {
 
   const generateIcon = () =>
     config?.type === "error" ? (
-      <Error width={30} height={30} />
+      <Error />
     ) : config?.type === "info" ? (
-      <Info width={30} height={30} />
+      <Info />
     ) : (
-      <Success width={30} height={30} />
+      <Success />
     );
 
   const generateBackgroundColor = () =>
@@ -115,10 +138,10 @@ export default function Toast({ ref, onHide }: ToastType) {
       ? "#f00a1d"
       : config?.type === "info"
       ? "#0077ed"
-      : "#1f8503";
+      : "#4bb543";
 
-  const viewLayoutHandler = (event: LayoutChangeEvent) =>
-    setToastHeight(event.nativeEvent.layout.height);
+  // const viewLayoutHandler = (event: LayoutChangeEvent) =>
+  //   setToastHeight(event.nativeEvent.layout.height);
 
   const textLayouthandler = (event: LayoutChangeEvent) =>
     setTextLength(Math.floor(event.nativeEvent.layout.width));
@@ -128,92 +151,126 @@ export default function Toast({ ref, onHide }: ToastType) {
     show,
   }));
 
-  const rView = useAnimatedStyle(
-    () => ({
-      transform: [{ translateY: transY.value }],
-      opacity: interpolate(transY.value, [-toastHeight, 80], [0, 1]),
-    }),
-    []
-  );
-
   const rOuterView = useAnimatedStyle(
     () => ({
-      transform: [{ translateX: -transX.value / 2 }],
+      transform: [{ translateY: transY.value }],
+      // opacity: interpolate(
+      //   transY.value,
+      //   [-toastHeight, Constants.statusBarHeight + 12],
+      //   [0, 1]
+      // ),
     }),
     []
   );
 
+  const rView = useAnimatedStyle(
+    () => ({
+      // transform: [{ translateX: -width.value / 2 }],
+      width: width.value,
+    }),
+    []
+  );
   const rInnerView = useAnimatedStyle(
     () => ({
-      transform: [{ translateX: transX.value }],
+      transform: [{ translateX: width.value }],
     }),
     []
   );
 
   const rText = useAnimatedStyle(
     () => ({
-      opacity: interpolate(transX.value, [0, textLength], [1, 0]),
+      // opacity: interpolate(width.value, [0, textLength], [1, 0]),
     }),
     [textLength]
   );
 
+  console.log(textLength);
+
   return (
-    <Animated.View onLayout={viewLayoutHandler} style={[styles.wrapper, rView]}>
-      <Animated.View style={[styles.outerContainer, rOuterView]}>
-        <Animated.View
+    <Animated.View style={[styles.outerContainer, rOuterView]}>
+      <Animated.View
+        // onLayout={viewLayoutHandler}
+        style={[
+          styles.wrapper,
+          rView,
+          {
+            backgroundColor: generateBackgroundColor(),
+          },
+        ]}
+      >
+        {/* <Animated.View
+        style={[
+          styles.container,
+          rInnerView,
+          { backgroundColor: generateBackgroundColor() },
+        ]}
+      > */}
+        {generateIcon()}
+        <Text
+          color={COLOR.text.main}
+          size={14}
+          type="body"
+          weight="600"
+          letterSpacing={0.1}
+          onLayout={textLayouthandler}
+          // isAnimated={true}
+          center
           style={[
-            styles.container,
-            rInnerView,
-            { backgroundColor: generateBackgroundColor() },
+            {
+              // marginLeft: 12,
+            },
+            // rText,
           ]}
         >
-          {generateIcon()}
-          <Text
-            color={COLOR.text.main}
-            size={16}
-            type="body"
-            weight="600"
-            letterSpacing={0.1}
-            marginLeft={12}
-            onLayout={textLayouthandler}
-            isAnimated={true}
-            center
-            style={[
-              {
-                marginLeft: 12,
-              },
-              rText,
-            ]}
-          >
-            {config?.text}
-          </Text>
-        </Animated.View>
+          {config?.text}
+        </Text>
+        {/* </Animated.View> */}
       </Animated.View>
     </Animated.View>
   );
 }
 
 const styles = StyleSheet.create({
-  wrapper: {
+  outerContainer: {
     position: "absolute",
-    // top: Constants.statusBarHeight + 24,
     top: 0,
+    left: 0,
+    right: 0,
     zIndex: 100,
-    marginHorizontal: 24,
+    justifyContent: "center",
+    alignItems: "center",
   },
 
-  outerContainer: {
-    overflow: "hidden",
+  wrapper: {
+    // top: 0,
+    // left: 0,
+    // right: 0,
+    // marginHorizontal: 24,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    // width: 36,
+    height: 32,
+    paddingHorizontal: 4,
     borderRadius: 40,
-    transform: [{ translateX: -70 / 2 }],
+    overflow: "hidden",
   },
+
+  // outerContainer: {
+  //   overflow: "hidden",
+  //   borderRadius: 40,
+  //   transform: [{ translateX: -70 / 2 }],
+  //   backgroundColor: "blue",
+  // },
 
   container: {
     flexDirection: "row",
-    justifyContent: "center",
     alignItems: "center",
-    padding: 12,
-    borderRadius: 40,
-    transform: [{ translateX: 70 }],
+
+    // justifyContent: "center",
+    // alignItems: "center",
+
+    // transform: [{ translateX: 70 }],
+    // width: 36,
   },
 });
