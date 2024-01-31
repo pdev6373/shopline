@@ -1,3 +1,4 @@
+import Text from "./Text";
 import { Ref, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { StyleSheet, LayoutChangeEvent, Dimensions } from "react-native";
 import { Error, Info, Success } from "../../assets/images/svgs";
@@ -11,7 +12,6 @@ import Animated, {
   withDelay,
   withTiming,
 } from "react-native-reanimated";
-import Text from "./Text";
 import { useTheme } from "../../hooks";
 import { ConfigProps, HideProps, ToastRef } from "../../types";
 
