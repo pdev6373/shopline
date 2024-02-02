@@ -1,6 +1,6 @@
 import Text from "./Text";
-import { StyleSheet, LayoutChangeEvent, Dimensions } from "react-native";
 import { Ref, useEffect, useImperativeHandle, useRef, useState } from "react";
+import { StyleSheet, LayoutChangeEvent, Dimensions } from "react-native";
 import { Error, Info, Success } from "../../assets/images/svgs";
 import Constants from "expo-constants";
 import Animated, {
