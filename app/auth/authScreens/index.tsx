@@ -16,8 +16,8 @@ import {
 } from "../../../assets/images/svgs";
 import { Pressable, StyleSheet, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
+import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { useTheme } from "../../../hooks";
 import { supabase } from "../../../supabase";
 import { ErrorType } from "../../../types";
