@@ -14,8 +14,8 @@ import {
   Google,
   User,
 } from "../../../assets/images/svgs";
-import { Pressable, StyleSheet, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { Pressable, StyleSheet, View } from "react-native";
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { useTheme } from "../../../hooks";
