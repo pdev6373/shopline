@@ -66,7 +66,6 @@ export default {
     accent,
     error,
     white: whiteColor,
-
     // tint: tintColorDark,
     // tabIconDefault: "#ccc",
     // tabIconSelected: tintColorDark,
