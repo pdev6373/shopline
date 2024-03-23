@@ -18,3 +18,7 @@ export { default as Uncheck } from "./uncheck.svg";
 export { default as Success } from "./success.svg";
 export { default as Error } from "./error.svg";
 export { default as Info } from "./info.svg";
+export { default as TemporaryDown } from "./temporary-down.svg";
+export { default as NotAvailable } from "./not-available.svg";
+export { default as NoConnection } from "./no-connection.svg";
+export { default as NoResult } from "./no-result.svg";

@@ -42,6 +42,11 @@ export default function NewPassword() {
       });
 
       if (error) throw error;
+
+      if (data)
+        router.push({
+          pathname: "/auth/authScreens/PasswordUpdated",
+        });
     } catch (error) {
       console.error(error);
     } finally {

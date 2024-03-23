@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
 
-export default function Bag() {
+export default function Search() {
   return (
     <View>
       <Text>index</Text>

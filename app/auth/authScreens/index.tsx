@@ -144,10 +144,12 @@ export default function Auth() {
 
     setLoading(true);
     try {
-      const { error } = await supabase.auth.signInWithPassword({
+      const { error, data } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
+
+      console.log(data);
 
       if (error) throw error;
     } catch (error) {
@@ -260,7 +262,10 @@ export default function Auth() {
           ))}
 
           {currentScreenData?.forgotPassword ? (
-            <Link href="/auth/ResetPassword" style={styles.forgotPassword}>
+            <Link
+              href="/auth/authScreens/ResetPassword"
+              style={styles.forgotPassword}
+            >
               <Text
                 color={COLOR.accent}
                 size={14}
@@ -384,6 +389,7 @@ const styles = StyleSheet.create({
 
   authButtons: {
     flexDirection: "row",
+    flexWrap: "wrap",
     gap: 12,
   },
 

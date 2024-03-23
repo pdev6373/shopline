@@ -41,9 +41,6 @@ export default function ResetType({ type }: ResetTypeType) {
     try {
       const { data, error } = await supabase.auth.resetPasswordForEmail(email);
 
-      console.log("data", data);
-      console.log("error", error);
-
       if (error) throw error;
       if (data)
         router.push({

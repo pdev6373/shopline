@@ -1,11 +1,10 @@
-import { Pressable, StyleSheet } from "react-native";
+import { Dimensions, Pressable, StyleSheet } from "react-native";
 import Text from "./Text";
 import {
   TextLetterSpacingType,
   TextSizeType,
   TextWeightType,
 } from "../../types";
-import { Link } from "expo-router";
 import { useTheme } from "../../hooks";
 
 type ButtonType = {
@@ -19,6 +18,7 @@ type ButtonType = {
   iconRight?: JSX.Element;
   background: string;
   padding: number;
+  paddingHorizontal?: number;
   radius: number;
   borderColor?: string;
   disabled?: boolean;
@@ -27,6 +27,7 @@ type ButtonType = {
 type ButtonStylesType = {
   backgroundColor: string;
   padding: number;
+  paddingHorizontal: number;
   borderRadius: number;
   borderColor?: string;
 };
@@ -41,6 +42,7 @@ export default function Button({
   background,
   radius,
   padding,
+  paddingHorizontal,
   iconLeft,
   iconRight,
   borderColor,
@@ -50,6 +52,7 @@ export default function Button({
     backgroundColor: background,
     borderRadius: radius,
     padding: padding - 1,
+    paddingHorizontal: (paddingHorizontal ? paddingHorizontal : padding) - 1,
     borderColor,
   });
 
@@ -130,6 +133,7 @@ export const SocialButton = ({ children, onPress, icon }: SocialButtonType) => {
 const styles = ({
   backgroundColor,
   padding,
+  paddingHorizontal,
   borderRadius,
   borderColor,
 }: ButtonStylesType) =>
@@ -137,6 +141,7 @@ const styles = ({
     button: {
       backgroundColor,
       padding,
+      paddingHorizontal: paddingHorizontal,
       borderRadius,
       flexDirection: "row",
       justifyContent: "center",
@@ -144,6 +149,8 @@ const styles = ({
       gap: 12,
       borderColor: borderColor || backgroundColor,
       borderWidth: 1,
-      flex: 1,
+      flexShrink: 0,
+      flexGrow: 1,
+      minWidth: Dimensions.get("screen").width * 0.5 - 30,
     },
   });

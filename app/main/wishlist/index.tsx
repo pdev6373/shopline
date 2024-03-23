@@ -1,9 +1,9 @@
 import { View, Text } from "react-native";
 
-export default function PageNotFound() {
+export default function Wishlist() {
   return (
     <View>
-      <Text>PageNotFound</Text>
+      <Text>index</Text>
     </View>
   );
 }
