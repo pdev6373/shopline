@@ -1,9 +1,9 @@
 import { View, Text } from "react-native";
 
-export default function Bag() {
+export default function deliveryOptions() {
   return (
     <View>
-      <Text>index</Text>
+      <Text>deliveryOptions</Text>
     </View>
   );
 }

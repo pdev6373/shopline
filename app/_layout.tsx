@@ -91,7 +91,7 @@ function RootLayoutNav() {
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <>
-        <Toast ref={toastRef} />
+        {/* <Toast ref={toastRef} /> */}
         <Stack screenOptions={{ headerShown: false }} />
       </>
     </ThemeProvider>

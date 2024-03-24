@@ -18,6 +18,7 @@ type InputType = {
   setValue: (text: string) => any;
   errorMessage?: string;
   setError?: Dispatch<SetStateAction<ErrorType>>;
+  isTransparent?: boolean;
 };
 
 type InputStylesType = {
@@ -25,6 +26,7 @@ type InputStylesType = {
   errorColor: string;
   inputColor: string;
   hasError?: boolean;
+  isTransparent: boolean;
 };
 
 export default function Input({
@@ -35,6 +37,7 @@ export default function Input({
   setValue,
   errorMessage,
   setError,
+  isTransparent = false,
 }: InputType) {
   const { COLOR } = useTheme();
   const Styles = styles({
@@ -42,6 +45,7 @@ export default function Input({
     errorColor: COLOR.error,
     inputColor: COLOR.text.main,
     hasError: !!errorMessage,
+    isTransparent,
   });
 
   return (
@@ -59,7 +63,7 @@ export default function Input({
             setValue(text);
           }}
           placeholder={placeholder}
-          placeholderTextColor={COLOR.placeholder}
+          placeholderTextColor={isTransparent ? "#475569" : COLOR.placeholder}
           style={Styles.input}
         />
         {iconRight}
@@ -153,6 +157,7 @@ const styles = ({
   hasError,
   errorColor,
   inputColor,
+  isTransparent,
 }: InputStylesType) =>
   StyleSheet.create({
     wrapper: {
@@ -160,20 +165,24 @@ const styles = ({
     },
 
     inputWrapper: {
-      backgroundColor,
+      backgroundColor: isTransparent ? "transparent" : backgroundColor,
       borderRadius: 1000,
       paddingHorizontal: 20,
       flexDirection: "row",
       alignItems: "center",
       gap: 13,
       borderWidth: 1,
-      borderColor: hasError ? errorColor : backgroundColor,
+      borderColor: hasError
+        ? errorColor
+        : isTransparent
+        ? "#2A3646"
+        : backgroundColor,
     },
 
     input: {
       paddingHorizontal: 0,
-      paddingVertical: 15,
+      paddingVertical: 10,
       flex: 1,
-      color: inputColor,
+      color: isTransparent ? "#F8FAFC" : inputColor,
     },
   });

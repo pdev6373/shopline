@@ -75,14 +75,14 @@ export default function ResetType({ type }: ResetTypeType) {
               placeholder="Email"
               value={email}
               setValue={setEmail}
-              iconLeft={<Email />}
+              iconLeft={<Email width={20} height={20} />}
             />
           ) : (
             <Input
               placeholder="Phone Number"
               value={phoneNumber}
               setValue={setPhoneNumber}
-              iconLeft={<Phone />}
+              iconLeft={<Phone width={20} height={20} />}
             />
           )}
         </View>

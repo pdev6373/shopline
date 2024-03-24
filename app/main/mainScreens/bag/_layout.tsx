@@ -1,18 +1,15 @@
 import { Stack } from "expo-router";
-import { useTheme } from "../../hooks";
-import Constants from "expo-constants";
+import { useTheme } from "../../../../hooks";
 
-export default function MainLayout() {
+export default function BagLayout() {
   const { COLOR } = useTheme();
 
   return (
     <Stack
-      initialRouteName="mainScreens"
       screenOptions={{
         headerShown: false,
         contentStyle: {
           backgroundColor: COLOR.background.main,
-          paddingTop: Constants.statusBarHeight,
         },
       }}
     />

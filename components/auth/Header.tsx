@@ -1,4 +1,4 @@
-import { StyleSheet, Pressable } from "react-native";
+import { Pressable } from "react-native";
 import { BackArrow, Cancel, LogoDark } from "../../assets/images/svgs";
 import { useRouter } from "expo-router";
 
@@ -24,12 +24,3 @@ export default function Header({ type = "cancel", route }: HeaderType) {
     <LogoDark width={44} height={44} />
   );
 }
-
-const styles = StyleSheet.create({
-  wrapper: {
-    width: 44,
-    height: 44,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});

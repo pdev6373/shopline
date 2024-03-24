@@ -1,7 +1,7 @@
 import { Slot } from "expo-router";
 import { ScrollView, StyleSheet } from "react-native";
 
-export default function _layout() {
+export default function AuthScreensLayout() {
   return (
     <ScrollView
       keyboardShouldPersistTaps="handled"

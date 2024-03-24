@@ -1,9 +1,9 @@
 import { View, Text } from "react-native";
 
-export default function Search() {
+export default function edit() {
   return (
     <View>
-      <Text>index</Text>
+      <Text>edit</Text>
     </View>
   );
 }

@@ -1,18 +1,18 @@
 import { StyleSheet, View, ScrollView, Pressable } from "react-native";
-import { Header } from "../../../components/auth";
+import { Header } from "../../../../components/auth";
 import {
   MainButton,
   MainHeading,
   MainTextLight,
   Text,
-} from "../../../components/general";
+} from "../../../../components/general";
 import {
   Check,
   Uncheck,
   PhoneWhite,
   EmailWhite,
-} from "../../../assets/images/svgs";
-import { useTheme } from "../../../hooks";
+} from "../../../../assets/images/svgs";
+import { useTheme } from "../../../../hooks";
 import { useState } from "react";
 import { useRouter } from "expo-router";
 
