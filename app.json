@@ -64,6 +64,12 @@
         {
           "faceIDPermission": "Allow Shopline to use Face ID to secure your account."
         }
+      ],
+      [
+        "react-native-vision-camera",
+        {
+          "cameraPermissionText": "Shopline needs access to your Camera."
+        }
       ]
     ],
     "experiments": {

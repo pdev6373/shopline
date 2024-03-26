@@ -10,6 +10,7 @@ import {
 } from "../../../../assets/images/svgs";
 import { Input, Text } from "../../../../components/general";
 import { useState } from "react";
+import { Link } from "expo-router";
 const laptop = require("../../../../assets/images/pngs/laptop.png");
 
 const recentSearch = [
@@ -109,7 +110,11 @@ export default function Search() {
           value={search}
           setValue={setSearch}
           iconLeft={<SearchIcon width={20} height={20} />}
-          iconRight={<Scan width={20} height={20} />}
+          iconRight={
+            <Link href={"/main/mainScreens/search/scanItem"}>
+              {/* <Scan width={20} height={20} /> */}p
+            </Link>
+          }
           isTransparent
         />
       </View>

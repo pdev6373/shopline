@@ -22,16 +22,28 @@ export default function MainScreensLayout() {
         tabBarStyle: {
           backgroundColor: "#0F172A",
           borderTopWidth: 0,
-          elevation: 8,
-          shadowColor: "#64748B05",
+          // elevation: 8,
+          // shadowColor: "#64748B05",
+          shadowColor: "#64748b",
+          shadowOffset: {
+            width: 24,
+            height: -8,
+          },
+          shadowOpacity: 0.02,
+          shadowRadius: 20.0,
+          elevation: 24,
+          paddingVertical: 0,
+
           // box-shadow: 0px -8px 24px 0px #64748B05;
         },
+
         tabBarLabelStyle: {
           fontSize: 10,
           fontWeight: "500",
           lineHeight: 16,
           letterSpacing: 0.2,
         },
+
         tabBarActiveTintColor: "#FFFFFF",
         tabBarInactiveTintColor: "#64748B",
       }}
