@@ -1,4 +1,4 @@
-import { View, Text as RNText, StyleSheet } from "react-native";
+import { Text as RNText, StyleSheet } from "react-native";
 import { Status, Text } from "../general";
 import { NoResult as NoResultImage } from "../../assets/images/svgs";
 

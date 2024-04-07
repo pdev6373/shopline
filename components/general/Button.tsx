@@ -81,27 +81,36 @@ type MainButtonType = {
   children: string;
   onPress?: any;
   disabled?: boolean;
-  transparent?: boolean;
+  type?: "primary" | "secondary" | "transparent";
+  iconLeft?: JSX.Element;
 };
 export const MainButton = ({
   children,
   onPress,
   disabled = false,
-  transparent = false,
+  type = "primary",
+  iconLeft,
 }: MainButtonType) => {
   const { COLOR } = useTheme();
 
   return (
     <Button
-      textColor={transparent ? COLOR.button.main : COLOR.button.textMain}
+      textColor={type === "primary" ? COLOR.button.textMain : COLOR.button.main}
       textLetterSpacing={0.1}
       textWeight="700"
       textSize={14}
-      background={transparent ? "transparent" : COLOR.button.main}
+      background={
+        type === "transparent"
+          ? "transparent"
+          : type === "secondary"
+          ? COLOR.background.secondary
+          : COLOR.button.main
+      }
       padding={16}
       radius={1000}
       onPress={onPress}
       disabled={disabled}
+      iconLeft={iconLeft ? iconLeft : <></>}
     >
       {children}
     </Button>

@@ -18,11 +18,9 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { useTheme } from "../../../hooks";
-import { supabase } from "../../../supabase";
-import { ErrorType } from "../../../types";
+import { useAuthentication, useTheme } from "../../../hooks";
+import { ErrorType, RegisterationType } from "../../../types";
 import { Header } from "../../../components/auth";
-import { GoogleSignin } from "@react-native-google-signin/google-signin";
 
 const GRADIENT_START = { x: 0, y: 0.5 };
 const GRADIENT_END = { x: 1, y: 0.5 };
@@ -98,28 +96,13 @@ export default function Auth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullname, setFullname] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [currentScreen, setCurrentScreen] = useState<"signup" | "signin">(
+  const [currentScreen, setCurrentScreen] = useState<RegisterationType>(
     params.type === "signup" ? "signup" : "signin"
   );
   const [currentScreenData, setCurrentScreenData] = useState(
     AUTH_DATA[currentScreen]
   );
-  const [error, setError] = useState<
-    ErrorType<"email" | "password" | "fullname">
-  >({
-    field: "",
-    message: "",
-  });
-  const [signinError, setSigninError] = useState("");
-
-  useEffect(() => {
-    GoogleSignin.configure({
-      webClientId: process.env.EXPO_PUBLIC_WEB_CLIENT_ID,
-      // androidClientId: process.env.EXPO_PUBLIC_ANDROID_CLIENT_ID,
-      iosClientId: process.env.EXPO_PUBLIC_IOS_CLIENT_ID,
-    });
-  }, []);
+  const { googleSignin, appleSignin, signin, signup } = useAuthentication();
 
   useEffect(() => {
     setCurrentScreenData(AUTH_DATA[currentScreen]);
@@ -131,95 +114,6 @@ export default function Auth() {
 
   const navigationType = () =>
     currentScreen === "signin" ? "signup" : "signin";
-
-  const signinHandler = async () => {
-    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
-      setError({
-        field: "email",
-        message: "Invalid email address",
-      });
-
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const { error, data } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      console.log(data);
-
-      if (error) throw error;
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const signupHandler = async () => {
-    if (!fullname) {
-      setError({
-        field: "fullname",
-        message: "Fullname is required",
-      });
-
-      return;
-    }
-
-    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
-      setError({
-        field: "email",
-        message: "Invalid email address",
-      });
-
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const { data, error } = await supabase.auth.signUp({
-        email: email.trim().toLowerCase(),
-        password,
-        options: {
-          data: {
-            fullname,
-          },
-        },
-      });
-
-      if (error) throw error;
-      if (!data.session)
-        router.push({
-          pathname: "/auth/authScreens/ActivateAccount",
-          params: {
-            email,
-          },
-        });
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const googleSigninHandler = async () => {
-    try {
-      await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn();
-    } catch (error: any) {
-      setError(error);
-    }
-  };
-
-  const appleSigninHandler = async () => {};
-
-  const logout = () => {
-    GoogleSignin.revokeAccess();
-    GoogleSignin.signOut();
-  };
 
   return (
     <>
@@ -252,12 +146,12 @@ export default function Auth() {
                   ? setPassword(value)
                   : setFullname(value);
               }}
-              errorMessage={
-                error.field === input.placeholder.toLowerCase()
-                  ? error.message
-                  : ""
-              }
-              setError={setError}
+              // errorMessage={
+              //   error.field === input.placeholder.toLowerCase()
+              //     ? error.message
+              //     : ""
+              // }
+              // setError={setError}
             />
           ))}
 
@@ -282,7 +176,7 @@ export default function Auth() {
         </View>
 
         <MainButton
-          onPress={currentScreen === "signin" ? signinHandler : signupHandler}
+          onPress={currentScreen === "signin" ? signin : signup}
           disabled={
             !email || !password || (currentScreen === "signup" && !fullname)
           }
@@ -320,10 +214,10 @@ export default function Auth() {
         </View>
 
         <View style={styles.authButtons}>
-          <SocialButton icon={<Google />} onPress={googleSigninHandler}>
+          <SocialButton icon={<Google />} onPress={googleSignin}>
             Google
           </SocialButton>
-          <SocialButton icon={<Apple />} onPress={appleSigninHandler}>
+          <SocialButton icon={<Apple />} onPress={appleSignin}>
             Apple
           </SocialButton>
         </View>

@@ -36,3 +36,5 @@ export type ToastRef = {
   show: (options: ConfigProps) => void;
   hide: (callback?: HideProps) => void;
 };
+
+export type RegisterationType = "signup" | "signin";
