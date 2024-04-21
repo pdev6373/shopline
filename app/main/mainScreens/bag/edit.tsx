@@ -3,7 +3,7 @@ import { View, Text } from "react-native";
 export default function edit() {
   return (
     <View>
-      <Text>edit</Text>
+      <Text>edit screen</Text>
     </View>
   );
 }
