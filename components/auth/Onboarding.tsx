@@ -6,10 +6,10 @@ import {
   View,
   useWindowDimensions,
 } from "react-native";
+import { useRef, useState } from "react";
 import { MainButton, MainHeading, MainTextLight, Text } from "../general";
 import { useTheme } from "../../hooks";
 import { Data } from "../../constants";
-import { useRef, useState } from "react";
 
 type OnboardingType = {
   image: JSX.Element;
@@ -31,7 +31,7 @@ export default function Onboarding() {
   const scrollX = useRef(new Animated.Value(0)).current;
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const viewableItemsChanged = useRef(({ viewableItems }) => {
+  const viewableItemsChanged = useRef(({ viewableItems }: any) => {
     setCurrentIndex(viewableItems[0].index);
   }).current;
 
