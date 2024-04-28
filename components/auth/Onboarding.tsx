@@ -11,12 +11,12 @@ import { MainButton, MainHeading, MainTextLight, Text } from "../general";
 import { useTheme } from "../../hooks";
 import { Data } from "../../constants";
 
-type OnboardingType = {
-  image: JSX.Element;
-  heading: string;
-  body: string;
-  href?: string;
-};
+// type OnboardingType = {
+//   image: JSX.Element;
+//   heading: string;
+//   body: string;
+//   href?: string;
+// };
 
 type OnboardingStylesType = {
   activeColor: string;
